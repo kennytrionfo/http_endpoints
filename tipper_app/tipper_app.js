@@ -17,7 +17,7 @@
 
 /////////////////////////========CONTROLLERS=======\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	app.controller('FirstCtrl', ['$scope', '$timeout',  function($scope, $timeout){
-
+		$scope.coolness = "'Us dreamers need to stick together.' - Tomorrow Land"
 	}]);
 
 	app.controller('SecondCtrl', ['$scope',  function($scope){
