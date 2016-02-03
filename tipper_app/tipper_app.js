@@ -13,10 +13,10 @@
 				templateUrl: 'pages/second.html',
 				controller: 'SecondCtrl'
 			})	
-			// .when('/second', {
-			// 	templateUrl: 'pages/second.html',
-			// 	controller: 'SecondCtrl'
-			// })		
+			.when('/second/:secret', {
+				templateUrl: 'pages/second.html',
+				controller: 'SecondCtrl'
+			})		
 	})
 
 /////////////////////////========CONTROLLERS=======\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -24,15 +24,10 @@
 		$scope.coolness = "'Us dreamers need to stick together.' - Tomorrow Land"
 	}]);
 
-	app.controller('SecondCtrl', ['$scope',  function($scope){
+	app.controller('SecondCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
 		$scope.funness = " 'Only those who risk going too far will know how far they can go.' "
+		$scope.secret = $routeParams.secret ;
 	}]);
-
-
-	app.controller('SecretCtrl', ['$scope',  function($scope){
-		$scope.funness = " 'Only those who risk going too far will know how far they can go.' "
-	}]);
-
 
 	app.controller('PhraseCtrl', function($scope, $timeout ){
 		$scope.phrase = "I'm a random phrase";
