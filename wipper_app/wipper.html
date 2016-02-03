@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="wipper">
+<head>
+	<title>Wipper</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<script type="text/javascript" src="../bower_components/angular/angular.min.js"> </script> 
+	<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"> </script>
+	<script type="text/javascript" src="../bower_components/angular-route/angular-route.min.js"> </script>
+	<script type="text/javascript" src="wipper.js"> </script>
+</head>
+	<header>
+		<nav class="navbar navbar-default" >
+ 			<div class="container" >
+ 				<div class="navbar-header" >
+ 					<a class="navbar-brand" href="#">Wipper</a>
+ 				</div>
+ 				<ul class="nav navbar-nav navbar-right" >   	
+ 					<li><a href="/first">Page 1</a></li>
+ 					<li><a href="/second">Page 2</a></li>
+ 				</ul>
+ 			</div>
+ 		</nav>
+	</header>
+<body> 
+	<div class="container"  >
+		<div ng-controller="handleController" >
+			<p ng-controller="phraseController" >This is my random phrase: {{randomPhrase}} </p>
+			<label>What do you want ur wipper handle to be?</label>
+			<input type="text"  ng-model="handle" />
+			<h2>Your Wipper Handle is:  </h2>
+			<h2 >Wipper.com/ {{handle}}</h2>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,294 @@
+steps for twitter app replication
+
+The idea basically is: 
+Create the variable in the js.
+Bind an html element to it with a directive then, 
+Show the object in the view 
+
+<!-- /////////////////////////========Twitter Project=======\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+Create an html page with the UTF-8 charset metatag, a link element linking to ur minified bootstrap file or the CDN link and ur script elements to either a minified local file or a CDN link to anguar, jquery and ur js files in ur head element: 
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="../bower_components/dist/css/bootstrap-theme.min.css">
+		<script type="text/javascript" src="../bower_components/angular/angular.min.js"> </script> 
+		<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"> </script>
+		<script type="text/javascript" src="script.js
+	</head>
+
+Put in a Navbar:
+	<header>
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">twittister</a>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">The WHY</a></li>
+					<li><a href="#">2nd Menu</a></li>
+					<li><a href="#">3rd Menu</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+Create ur js file and create a variable/object in your js file that is the angular module: 
+	In ur js file:
+	var angularApp = angular.module('someName', []);
+
+Add that angular module reference as an angular directive to ur html element:
+	In the html tag: 
+	ng-app="someName "
+
+Add to html a containter div with another plain div in it with a p element in it with "This is my random phrase:" in it. 
+
+Do some angular string interpolation by creating a basic controller in the angular module of the js file with the name of 'phrase': 
+	angularApp.controller('phraseController', function() {
+	});
+
+Inject the service/object $scope into your controller: 
+	Should look like this: 
+	angularApp.controller('phraseController', ['$scope', function ($scope ) {
+  }]);
+
+Add a new object/var in the scope called phrase that is a randome phrase in a string: 
+	In the controller: 
+	$scope.phrase = 'Kenny Ken ken';
+
+In ur P element in the html, add a directive that points to the phrase controller that you put in the angular module in the js file: 
+	<div class="container" >
+		<p ng-controller="phraseController">This is my random phrase dude: </p>
+	</div>
+
+Put a watcher on the var in the view by showing the randomPhrase var in the P element using string interpolation. Refresh to see: 
+	<div class="container" >
+		<p ng-controller="phraseController">This is my random phrase dude: {{randomPhrase}} </p>
+	</div>
+
+Bind an html element to a var in ur ng module:
+	by creating a label and input box under your P element asking for input of what they want their twiffer handle to be, as well as a little output diaglog like "Your twitter handle is ..." : 
+  <div class="container">
+    <div >
+    	<p>This is my random Phrase: {{phrase}} </p>
+      <label>What do you want ur twittister handle to be?</label>
+      <input type="text" />
+      <h2>Your twittister handle is: </h2>
+      <h2>twittister.com/ </h2>
+    </div>
+  </div>	
+
+Create a var/model called 'handle' that's an empty string in a new controller called 'handleController' in ur angularApp module that ur injecting the Scope service/object: 
+	angularApp.controller('handleController', ['$scope',  function ($scope) {
+		$scope.handle = ' ';
+	}]);
+
+Add a ng-controller directive to the html element contains both the element that that your going to get the user's input in and the one that you will output it in: 
+	 Like maybe in the container div that it's in:
+   <div ng-controller="handleController">
+
+Add a directive to the Input element in ur html to bind the input to the handle var/model in new handleController: 
+	In the same div: 
+   <input type="text" ng-model="handle" />
+
+Put the string interpolated reference to the new var/model/object 'handle' in the html and test. Should see. 
+	After ur www.twiffer.com/: 
+	<h4>www.twiffer.com/ {{handle}} </h4>
+
+Back in the phraseController, add another service/object called $timeout and use it in the controller by passing it a function that changes the string content of the phraseController var to something else after two seconds: 
+	angularApp.controller('phraseController', ['$scope', '$timeout',  function('$scope', '$timeout' ) {
+		$timeout(function() {
+			$scope.phrase = 'Willy Wonka';
+		}, 2000);
+  }]);	
+  rf and see. 
+
+Filter the text in the output of the twitter handle to all be uppercase:
+	Add the $filter service that comes with angular into the controller. 
+	Create a function in the controller that turns the handle property on scope all uppercase. 
+	Interpolate the new function call in the html. 
+	Controller should look like this: 
+			$scope.lowercasehandle = function(){
+			return $filter('uppercase')($scope.handle);
+		};
+	Then html should have {{ lowercasehandle() }} in it. 
+
+Put a requirement on the handle, that it has to be exactly 5 characters: 
+	Add a new var to the scope called characters: 
+		$scope.characters = 5;
+	Add a bootstrap Alert div to the html with the text 'Must be 5 characters' in it and put the ng-if directive in it passing in a boolean to show when the characters in the text box Don't equal 5: 
+		<div class="alert "  ng-if="handle.length !== characters" >
+			Must be 5 characters.
+		</div>
+
+Show a different bootstrap class when the input text is less than 5 characters and when it's more than 5: 
+	Use the ng-class directive: 
+	ng-class="{'alert-warning':handle.length < characters, 'alert-danger':handle.length > characters } "
+
+Show a different message depending on how many characters are in the input box: 
+	Put two new divs around your messages each with and ng-show directive: 
+			<div ng-show="handle.length < characters "  >
+				You don't have 5 characters yet!
+			</div>
+			<div ng-show="handle.length > characters" >
+				You have TOO MANY characters!
+			</div>
+Add a button that shows an alert when clicked using ng-click: 
+	In html: 
+			<input type="button" value="click me dude" ng-click="alertClick()" />
+	In controller:
+		$scope.alertClick = function(){
+			alert("Hey there!");
+		};	
+
+Display a list of items from a json object in another .json file using the ngResource service:
+	Install ngResource module into bower file and/or references ngResource module cdn from html file like: 
+		<script type="text/javascript" src="../bower_components/angular-resource/angular-resource.min.js"> </script>
+	Insert $resource service into your controller:
+	Create a data.json file in the same directory with a json object in it with some data in it. 
+	Create a new property on ur scope in the controller that gives you access to the records in the json file.
+	Create a list or a table and use ng-repeate directive to repeate items in the data. 
+
+Set up routing by:
+	Add a folder called pages with a first.html page and a second.html page in it and put some html like "This is the first page" in it or something. 
+
+	Add the ng-route dependency to the app, to use to route urls to different pages:
+		In the html file add a script link to the angular router of choice (ie ng-route or ui-route etc), linking it either to a file with the downloaded file or to the website like: 
+		<script type="text/javascript" src="//code.angularjs.org/1.4.7/angular-route.min.js "></script>
+		or
+		<script type="text/javascript" src="../angular-route.min.js "></script>
+		or 
+		put it in bower foler using bower. 
+
+	Tell the app that ur going to use this module which will be a dependency, by putting the dependency into the dependencies in the app: 
+		In ur js file:
+		var angularApp = angular.module('twinnerApp', ['ngRoute ']);	
+
+	Use the .config method that ngRoute module provides and call it on the app and pass in the $routeProvider service? to the function: 
+		angularApp.config(function($routeProvider) {
+			
+		});
+
+	Make the homepage into 2 sections by putting in some col-md-6's on the twinner.html? 
+
+	Now pass the $routeProvider function to the config method to connect two different URLs to two different controllers by useing the when method and passing in the url, a json object that has the key/value pairs of The templateUrl and the controller: 
+		angularApp.config(function($routeProvider) {
+			$routeProvider
+				.when('/',  {
+					templateUrl: 'pages/first.html', 
+					controller: 'firstController'
+				}) 
+				.when('/second', {
+					templateUrl: 'pages/second.html'
+					controller: 'secondController'
+				})
+		});
+
+	Create a second controller (or a first and a second if needed) for the second .when method to connect to: 
+		angularApp.controller('secondController', ['$scope', function ($scope) {
+	 
+		}]);
+
+	Add the '/' and the '/second' to the menu bar links in ur html for the nav in the header:
+		<li><a href="#/">The WHY</a></li>
+		<li><a href="#/second">Second Page</a></li>
+
+	Go to / and /second and see if first show's up. 
+
+	You may want to divide up the page at this point to put the 1st and 2nd page stuff on the right side or something. 
+
+	Add a timer or something you'd like to see happen in the controllers to prove they're reaching the view if you want. 
+
+Give a page a specific value by passing the URL a value using pattern matching: 
+	In ur config method where ur doing ur routing, create a third route but add :num to the end of the /second url: 
+		.when('/second/:num', {
+			templateUrl: 'pages/second.html',
+			controller: 'secondController'
+		});
+
+	Then inject the $routeParams service, that ng-route module gives us, into the secondController controller: 
+		First line should look like: 
+		angularApp.controller('secondController',  ['$scope', '$timeout', '$routeParams', function ($scope, $timeout, $routeParams) {
+
+	Make the value of whatever is passed into the URL hash, a property of routeParams, by appending it on the $routeParams object and assigning it to a variable in ur scope: 
+		Like: 
+		$scope.num = $routeParams.num || 'No value yet' 
+
+	Now go to your view and put in something that will show what ur passing into the url:
+		Like: 
+		<p>The Scope Value from the Url is: {{num}} </p>
+
+Create a custom service called customService by 
+	calling the .service method on ur app and putting a variable in it that we can reference in our view: 
+	angularApp.service('customService', function() {
+		this.customServiceVar = "I'm am the Funky Variable in the custom service";
+	});	
+	Inject this new service into your handleController and create a new var and assign the new service's var to it: 
+	angularApp.controller('handleController', ['$scope', '$timeout', 'customService', function ($scope, $timeout, customService) {
+	$scope.billybob = customService.customServiceVar;
+	
+	Put the new controller var into a view that's tied to that controller: 
+	<div ng-controller="handleController" >
+	<p> {{billybob}} </p>
+ 
+Put a little search area on the page with a search label, an input box and search results listing using bootstrap list item, custom content html:
+	<label>Search for a Customer:</label><input type="text" />
+	<br><br>
+	<div class="list-group">
+		<a href="#" class="list-group-item ">
+	    <h4 class="list-group-item-heading">Frankie Jibbs</h4>
+	    <p class="list-group-item-text">222 Main St., New York, NY 22222 </p>
+	  </a>
+	</div>
+
+Create a custom directive by converting the bootstrap search results html above to a custom directive: 
+	 	In ur js file, attach a directive to the angularApp called 'searchResult' and give it a function that returns an object (the directive), with a template property (This is the html from the first page and that is the html that gets outputted when this directive is used). 
+		angularApp.directive('searchResult', function() {
+			return {
+				template: '<a href="#" class="list-group-item "><h4 class="list-group-item-heading">Frankie Siddys</h4><p class="list-group-item-text">222 Main St., New York, NY 22222 </p></a>'
+			}
+		});
+	 	Now get rid of the original 'search results' html in the first view and replace with your new directive normalizing the camelcase name of it to dashes. 
+	 	  <search-result></search-result>
+	 		Rf and should see results.
+	 		
+	 		Add a 2nd or 3rd to the first one and try using a different formate like: 
+			<search-result></search-result>
+			<div search-result ></div>			  
+			<search-result></search-result>
+
+	 		Add the 'replace:true' property on ur directive's object, rf and rendered html should be just the directive's html and u shouldn't see the angular <search-result> element anymore in the pages loaded html if you check in inspect element. 
+ 
+Modularize your directive html code by putting it into a file in a folder and reference it from inside ur directive: 
+	In main app, create a new folder called directives. 
+	In that folder create a file called searchresult.html
+	Take the html contents from your custom 'searchResults' directive and put them into this new html file. 
+	In the object of the searchResult template, reference the new html in the new place by changing the template key to templateURL and make it's value the path to the new file like: 
+		templateURL: 'directives/search_result.html'
+		rf & check.
+
+Modularize the use of models by putting a new model 'Person' with a name and address property, in the firstController cuz that's the one that you're connecting/using with your first.html template/view which is where ur using your new 'search-result' directive. 
+		In ur firstController: 
+		$scope.person = {
+			name: 'Fluffy Funnelcakes', 
+			address: '1212 Bigdog lane'
+		};
+
+		Then in searchResult directive object/html (which is now our search_result.html file), interpolate the name and address property of the person object like: 
+			<a href="#" class="list-group-item " ng-controller="stringController">
+				<h4 class="list-group-item-heading">{{person.name}} </h4>
+				<p class="list-group-item-text">{{person.address}} </p>
+			</a>		
+
+Refactor
+	Put in comments
+	Modularize by putting like types of code etc into groups within the same file or separate files. 
+	DRY it out by reducing the total lines of code as much as poss. 
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="angularApp">
+<head>
+	<title>Twitter</title>
+	<meta charset="UTF-8">
+
+	<!-- load bootstrap and fontawesome via CDN (actually loading form the current directory. I downlaoded it. -) -->
+	<link rel="stylesheet" href="bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="twinner.css">
+
+	<!-- load angular via CDN (actually loading from the directory. I downloaded. -Kenny) -->
+	<script src="angular.min.js"></script>
+	<script src="twitter.js"></script>
+
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">twittister</a>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">The WHY</a></li>
+					<li><a href="#">2nd Menu</a></li>
+					<li><a href="#">3rd Menu</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+  <div class="container">
+      <div ng-controller="mainController" >
+					<p>Kenny's name is:  {{name}} </p>
+	        <label>What do you want ur twittister handle to be?</label>
+	        <input type="text" ng-model="handle"/>
+	        <h2>Your twittister handle is: </h2>
+	        <h2>twittister.com/ {{handle}} </h2>
+      </div>
+  </div>
+
+</body>
+</html>
