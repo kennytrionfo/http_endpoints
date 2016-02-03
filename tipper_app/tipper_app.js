@@ -21,7 +21,7 @@
 	}]);
 
 	app.controller('SecondCtrl', ['$scope',  function($scope){
-
+		$scope.funness = " 'Only those who risk going too far will know how far they can go.' "
 	}]);
 
 	app.controller('PhraseCtrl', function($scope, $timeout ){
