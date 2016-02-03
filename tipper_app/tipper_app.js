@@ -12,7 +12,11 @@
 			.when('/second', {
 				templateUrl: 'pages/second.html',
 				controller: 'SecondCtrl'
-			})		
+			})	
+			// .when('/second', {
+			// 	templateUrl: 'pages/second.html',
+			// 	controller: 'SecondCtrl'
+			// })		
 	})
 
 /////////////////////////========CONTROLLERS=======\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -23,6 +27,12 @@
 	app.controller('SecondCtrl', ['$scope',  function($scope){
 		$scope.funness = " 'Only those who risk going too far will know how far they can go.' "
 	}]);
+
+
+	app.controller('SecretCtrl', ['$scope',  function($scope){
+		$scope.funness = " 'Only those who risk going too far will know how far they can go.' "
+	}]);
+
 
 	app.controller('PhraseCtrl', function($scope, $timeout ){
 		$scope.phrase = "I'm a random phrase";
