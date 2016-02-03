@@ -26,7 +26,7 @@
 
 	app.controller('SecondCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
 		$scope.funness = " 'Only those who risk going too far will know how far they can go.' "
-		$scope.secret = $routeParams.secret ;
+		$scope.secret = $routeParams.secret || 1;
 	}]);
 
 	app.controller('PhraseCtrl', function($scope, $timeout ){
